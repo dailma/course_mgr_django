@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Course Manager</title>
+		{% load staticfiles %}
+		<link rel="stylesheet"
+			  href="{% static 'course_mgr/css/styles.css' %}"
+			  media="screen"
+			  title="no title"
+			  charset="utf-8">
+	</head>
+	<body>
+		<div class="container">
+			<div class="add">
+				<h3>Add a course</h3>
+				<form action="courses/add" method="POST">
+					{% csrf_token %}
+					<div class="form_labels">
+						<label for="inp_name">Name</label>
+						<label for="inp_description">Description</label>
+					</div>
+					<div class="form_inputs">
+						<input type="text" name="inp_name">
+						<textarea name="inp_description"></textarea>
+					</div>
+					<input type="submit" value="Add">
+				</form>
+			</div>
+			<div class="list">
+				<h3>Courses</h3>
+				<table>
+					<tr>
+						<th>Course name</th>
+						<th>Description</th>
+						<th>Date added</th>
+						<th>Actions</th>
+					</tr>
+					{% for course in courses %}
+					<tr>
+						<td>{{ course.name }}</td>
+						<td>{{ course.description }}</td>
+						<td>{{ course.created_at }}</td>
+						<td>
+							<a href="/courses/destroy/{{ course.id }}">
+								remove
+							</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="footer">
+				<img src="{% static 'course_mgr/img/coding_dojo.png' %}">
+			</div>
+		</div>
+	</body>
+</html>
